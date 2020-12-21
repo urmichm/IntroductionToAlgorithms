@@ -2,6 +2,7 @@
 
 
 /**
+ * NOTE: casting from double to int is not perfect
  * Given a set of n points P, find a pair of closest points
  * Distance between points is Euclidean distance 
  * Ass: Each point has its unique x and y coordinates
