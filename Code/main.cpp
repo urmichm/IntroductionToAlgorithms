@@ -19,7 +19,7 @@ int main()
 			Point(7,4),
 			Point(5,5),
 			Point(3,3),
-			Point(1,5)
+			Point(2,2)
 		});
 	cout << "Vector created" << endl;
 
