@@ -13,12 +13,17 @@ int main()
 
 	vector<Point> arr(
 		{
+			Point(-7,-7), 
 			Point(0,0),
 			Point(4,-1),
 			Point(6,1),
 			Point(7,4),
 			Point(5,5),
+			Point(10,6),
+			Point(-2,-3),
 			Point(3,3),
+			Point(8,-2),
+			Point(13,7),
 			Point(2,2)
 		});
 	cout << "Vector created" << endl;

@@ -13,6 +13,9 @@
 #include <algorithm>
 using namespace std;
 
+/**
+ * Class Point
+ */
 class  Point {
 public:
 	int x;
@@ -30,16 +33,26 @@ public:
 };
 
 
-
+/* Public functions declaration */
 pair<Point,Point> ClosestPair(vector<Point>& points);
+
+/* Private functions declaration */
 static pair<Point,Point> ClosestPair_BruteForce(vector<Point>& points);
 static pair<Point, Point> DnC_ClosestPair(vector<Point>& Px, vector<Point>& Py);
 static pair<Point, Point> ClosestSplitPair(vector<Point>& Px, vector<Point>& Py, int delta);
-static int EuclideanDistance2(pair<Point, Point>& pair);
-static int EuclideanDistance2(Point& p, Point& q);
+static int EuclideanDistance(pair<Point, Point>& pair);
+static int EuclideanDistance(Point& p, Point& q);
 
+
+/**
+ * @brief Algorithm to solve the Closest Pair problem
+ * @param points - the problem set, never empty, contains at least 2 points
+ */
 pair<Point, Point> ClosestPair(vector<Point>& points)
 {
+	if (points.size() == 2)
+		return make_pair(points[0], points[1]);
+
 	vector<Point> Px(points); 
 	vector<Point> Py(points); 
 	// points sorted by x-coord
@@ -54,14 +67,18 @@ pair<Point, Point> ClosestPair(vector<Point>& points)
 	return DnC_ClosestPair(Px, Py);
 }
 
+
+/**
+ * Brute Force method to solve the Problem in the base case (when numbers of points is at most 3)
+ */
 static pair<Point, Point> ClosestPair_BruteForce(vector<Point>& points)
 {
 	if (points.size() == 2)
 		return make_pair(points[0], points[1]);
 
-	int p01 = EuclideanDistance2(points[0], points[1]);
-	int p02 = EuclideanDistance2(points[0], points[2]);
-	int p12 = EuclideanDistance2(points[1], points[2]);
+	int p01 = EuclideanDistance(points[0], points[1]);
+	int p02 = EuclideanDistance(points[0], points[2]);
+	int p12 = EuclideanDistance(points[1], points[2]);
 
 	if (p01 <= p02 && p01 <= p12)
 	{
@@ -75,10 +92,13 @@ static pair<Point, Point> ClosestPair_BruteForce(vector<Point>& points)
 }
 
 
+/**
+ * Divide and Conquer apprach to solve the Closest Pair problem
+ */
 static pair<Point, Point> DnC_ClosestPair(vector<Point>& Px, vector<Point>& Py)
 {
 	const int N = Px.size();
-	if (N <= 3) // N could be 2 or 3
+	if (N <= 3) // N could be 2 or 3, since the problem set is non-empty
 		return ClosestPair_BruteForce(Px);
 	int mid = N / 2;
 	int delta = INT_MAX;
@@ -86,6 +106,7 @@ static pair<Point, Point> DnC_ClosestPair(vector<Point>& Px, vector<Point>& Py)
 
 	Point m = Px[mid];
 
+	// Extra space used !
 	vector<Point> Lx(Px.begin(), Px.begin() + mid);
 	vector<Point> Ly;
 
@@ -97,67 +118,78 @@ static pair<Point, Point> DnC_ClosestPair(vector<Point>& Px, vector<Point>& Py)
 		else			Ry.push_back(p);
 	}
 
+	// Go recursively on left and right halves
 	pair<Point, Point> left = DnC_ClosestPair(Lx, Ly);
 	pair<Point, Point> right = DnC_ClosestPair(Rx, Ry);
 
-
-	if (EuclideanDistance2(left) < EuclideanDistance2(right))
+	// find delta
+	if (EuclideanDistance(left) < EuclideanDistance(right))
 	{
 		result = left;
-		delta = EuclideanDistance2(left);
+		delta = EuclideanDistance(left);
 	}
 	else
 	{
 		result = right;
-		delta = EuclideanDistance2(right);
+		delta = EuclideanDistance(right);
 	}
 
-
+	// find the closest pair in the strip
 	pair<Point, Point> split = ClosestSplitPair(Px, Py, delta);
-	if (delta > EuclideanDistance2(split))
+	if (delta > EuclideanDistance(split))
 		result = split;
 
+	// return the result
 	return result;
 }
 
-
+/**
+ * Check if closest pair of points are split between L and R halves
+ */
 static pair<Point, Point> ClosestSplitPair(vector<Point>& Px, vector<Point>& Py, int delta)
 {
 	const int N = Px.size();
-
+	// Calculate midle point on X axis
 	int mid = N / 2;
-	int best = delta;
-	pair<Point, Point> pair(Point(INT_MIN, INT_MIN), Point(INT_MAX, INT_MAX));
+	// Get X axis of the middle point
+	int X = Px[mid - 1].x;
 
-	Point m = Px[mid-1];
-	int X = m.x;
 
+	pair<Point, Point> result_pair(Point(INT_MIN, INT_MIN), Point(INT_MAX, INT_MAX));
+
+	// Points in the critical strip
 	vector<Point> Sy;
-
-	for (Point p : Px) {
+	for (Point p : Py) {
+		// Add points in the script sorted by Y-axis
 		if ( X-delta < p.x &&  p.x < X + delta)  
 			Sy.push_back(p);
 	}
 
+	// Go through each point in the critical strip
 	for (unsigned int i = 0; i < Sy.size(); i++)
 	{
-		for (unsigned int j = 1; j < min(7U, Sy.size() - i); j++)
+		// Compare each point up to its 7 closest neighbors
+		for (unsigned int j = 1; j < min(8U, Sy.size() - i); j++)
 		{
 			Point p = Sy[i];
 			Point q = Sy[i + j];
 
-			if (EuclideanDistance2(p, q) < best)
+			// If we find a closer pair of points, update the result
+			if (EuclideanDistance(p, q) < delta)
 			{
-				pair = make_pair(p, q);
-				best = EuclideanDistance2(p, q);
+				result_pair = make_pair(p, q);
+				delta = EuclideanDistance(p, q);
 			}
 		}
 	}
 
-	return pair;
+	return result_pair;
 }
 
-static int EuclideanDistance2(Point& p, Point& q)
+/**
+ * Find EuclideanDistance^2 between a pair of points
+ * @param p,q - a pair of points
+ */static int EuclideanDistance(Point& p, Point& q)
 {
 	if (p.x == INT_MIN || p.x == INT_MAX)		return INT_MAX;
 	if (p.y == INT_MIN || p.y == INT_MAX)		return INT_MAX;
@@ -166,11 +198,15 @@ static int EuclideanDistance2(Point& p, Point& q)
 
 	int dx = abs(p.x - q.x);
 	int dy = abs(p.y - q.y);
-	return dx * dx + dy * dy;
+	return ceil(sqrt(dx*dx + dy*dy));
 }
 
 
-static int EuclideanDistance2(pair<Point, Point>& pair)
+/**
+ * Find EuclideanDistance^2 between a pair of points
+ * @param pair - a pair of points
+ */
+static int EuclideanDistance(pair<Point, Point>& pair)
 {
 	Point& p = pair.first;
 	Point& q = pair.second;
@@ -182,7 +218,7 @@ static int EuclideanDistance2(pair<Point, Point>& pair)
 
 	int dx = abs(p.x - q.x);
 	int dy = abs(p.y - q.y);
-	return dx*dx + dy*dy;
+	return ceil( sqrt(dx*dx + dy*dy) );
 }
 
 
