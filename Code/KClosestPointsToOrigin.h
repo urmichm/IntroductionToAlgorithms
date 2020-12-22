@@ -26,7 +26,11 @@
 #include <vector>
 #include <algorithm>
 #include <time.h>
+
+#define K_CLOSEST
+
 using namespace std;
+
 
 /* Public functions declaration */
 vector<vector<int>> kClosest(vector<vector<int>>& points, int K);

@@ -12,6 +12,9 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
+
+#define CLOSEST_PAIR
+
 using namespace std;
 
 /**
