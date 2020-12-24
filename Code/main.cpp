@@ -1,13 +1,88 @@
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 
-#include "Quicksort.h"
+#include "Search2DMatrixII.h"
+
 #include <iostream>
 using namespace std;
 
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+#ifdef SEARCH_2D_MATRIX_II
+	{
+		vector<vector<int>> matrix = {
+			{ 1 }, 
+			{ 3 },
+			{ 5 }
+		};
+		int target = 5;
+		bool expected = true;
+		cout << "Search 2D Matrix II " << expected << ", returned "
+			<< searchMatrix(matrix, target) << endl;
+	}
+	{
+		vector<vector<int>> matrix = {
+			{ 1,  3,  5}
+		};
+		int target = 3;
+		bool expected = true;
+		cout << "Search 2D Matrix II " << expected << ", returned "
+			<< searchMatrix(matrix, target) << endl;
+	} 
+	{
+		vector<vector<int>> matrix = {
+			{ 1,  4,  7, 11, 15},
+			{ 2,  5,  8, 12, 19},
+			{ 3,  6,  9, 16, 22},
+			{10, 13, 14, 17, 24},
+			{18, 21, 23, 26, 30}
+		};
+		int target = 5;
+		bool expected = true;
+		cout << "Search 2D Matrix II " << expected << ", returned "
+			<< searchMatrix(matrix, target) << endl;
+	}
+	{
+		vector<vector<int>> matrix = {
+			{ 1,  4,  7, 11, 15},
+			{ 2,  5,  8, 12, 19},
+			{ 3,  6,  9, 16, 22},
+			{10, 13, 14, 17, 24},
+			{18, 21, 23, 26, 30}
+		};
+		int target = 24;
+		bool expected = true;
+		cout << "Search 2D Matrix II " << expected << ", returned "
+			<< searchMatrix(matrix, target) << endl;
+	} 
+	{
+		vector<vector<int>> matrix({
+			{ 1,  4,  7, 11, 15}, 
+			{ 2,  5,  8, 12, 19}, 
+			{ 3,  6,  9, 16, 22},
+			{10, 13, 14, 17, 24}, 
+			{18, 21, 23, 26, 30}
+		});
+		int target = 20;
+		bool expected = false;
+		cout << "Search 2D Matrix II " << expected << ", returned "
+			<< searchMatrix(matrix, target) << endl;
+	}
+	{
+		vector<vector<int>> matrix({
+			{ 1,  4,  7, 11, 15, 18},
+			{ 2,  5,  8, 12, 19, 21},
+			{ 3,  6,  9, 16, 22, 23},
+			{10, 13, 14, 17, 24, 26}
+		});
+		int target = 20;
+		bool expected = false;
+		cout << "Search 2D Matrix II " << expected << ", returned "
+			<< searchMatrix(matrix, target) << endl;
+	}
+#endif // SEARCH_2D_MATRIX_II
 
 #ifdef K_LARGEST
 	//{	
@@ -35,8 +110,7 @@ int main()
 
 	}
 #endif // QUICK_SORT
-
-
+	
 #ifdef K_CLOSEST
 	vector<vector<int>> points{ {0,10},{0,1},{0,5},{0,2},{0,4},{0,9},{0,3},{0,6},{0,8},{0,7}, };
 	vector<vector<int>> result = kClosest(points, 4);
