@@ -28,12 +28,55 @@ bool searchMatrix(vector<vector<int>>& matrix, int target);
 
 /* Private functions declaration */
 static bool DnC_searchMatrix(vector<vector<int>>& matrix, int rBegin, int rEnd, int cBegin, int cEnd, int target);
-
+static bool BT_searchMatrix(vector<vector<int>>& matrix, int target);
 
 
 bool searchMatrix(vector<vector<int>>& matrix, int target) 
 {
-	return DnC_searchMatrix(matrix, 0, matrix.size(), 0, matrix[0].size(), target);
+	/* Choose the appraoch by commenting and uncommenting the function calls */
+	//return DnC_searchMatrix(matrix, 0, matrix.size(), 0, matrix[0].size(), target);
+	return BT_searchMatrix(matrix, target);
+}
+
+
+/**
+ * @brief SearhMatrix algorithm, algorithm treats matrix as a Binary Search tree with root to be the element on the right upper conner.
+ * Each node matrix[i][j] has two children: The left child matrix[i][j-1] < matrix[i][j] and the right one matrix matrix[i+1][j]
+ * The alg travers the tree to find the target element;
+ * @param matrix - matrix to travers
+ * @param target - the value to find in the matrix
+ * @return TRUE if the target element is in the matrix, FALSE otherwise
+ */
+static bool BT_searchMatrix(vector<vector<int>>& matrix, int target)
+{
+	const int M = matrix.size(); // number of rows, M <= 300
+	const int N = matrix[0].size(); // number of columns, N >= 1
+	
+	int row = 0;    // row index
+	int col = N-1;  // col index
+
+	while (true)
+	{
+		if (matrix[row][col] > target)
+		{
+			col--;
+		}
+		else if (matrix[row][col] < target)
+		{
+			row++;
+		}
+		else
+		{
+			return true;
+		}
+		if (col < 0 || row >= M)
+		{
+			return false;
+		}
+	}
+
+	/* Defence code; This line shall never be executed */
+	return false;
 }
 
 /**
