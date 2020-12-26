@@ -1,7 +1,7 @@
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 
-#include "Search2DMatrixII.h"
+#include "Search2DMatrixI.h"
 
 #include <iostream>
 using namespace std;
@@ -9,6 +9,54 @@ using namespace std;
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+
+#ifdef SEARCH_2D_MATRIX_I
+
+#endif // SEARCH_2D_MATRIX_I
+	{
+		vector<vector<int>> matrix = {
+			{ 1 },
+			{ 3 },
+			{ 5 }
+		};
+		int target = 5;
+		bool expected = true;
+		cout << "Search 2D Matrix I " << expected << ", returned "
+			<< searchMatrix(matrix, target) << endl;
+	}
+	{
+		vector<vector<int>> matrix = {
+			{ 1,  3,  5}
+		};
+		int target = 3;
+		bool expected = true;
+		cout << "Search 2D Matrix I " << expected << ", returned "
+			<< searchMatrix(matrix, target) << endl;
+	}
+	{
+		vector<vector<int>> matrix = {
+			{  1,   3,   5},
+			{ 11,  13,  15},
+			{ 21,  23,  25}
+		};
+		int target = 24;
+		bool expected = false;
+		cout << "Search 2D Matrix I " << expected << ", returned "
+			<< searchMatrix(matrix, target) << endl;
+	}
+	{
+		vector<vector<int>> matrix = {
+			{  1,   3,   5,  6},
+			{ 11,  13,  15, 17},
+			{ 21,  23,  25, 19},
+			{ 31,  53,  65, 79}
+		};
+		int target = 24;
+		bool expected = false;
+		cout << "Search 2D Matrix I " << expected << ", returned "
+			<< searchMatrix(matrix, target) << endl;
+	}
 
 #ifdef SEARCH_2D_MATRIX_II
 	{
@@ -41,7 +89,7 @@ int main()
 		};
 		int target = 5;
 		bool expected = true;
-		cout << "Search 2D Matrix II " << expected << ", returned "
+		cout << "Search 2D Matrix II" << expected << ", returned "
 			<< searchMatrix(matrix, target) << endl;
 	}
 	{
@@ -54,7 +102,7 @@ int main()
 		};
 		int target = 24;
 		bool expected = true;
-		cout << "Search 2D Matrix II " << expected << ", returned "
+		cout << "Search 2D Matrix II" << expected << ", returned "
 			<< searchMatrix(matrix, target) << endl;
 	} 
 	{
