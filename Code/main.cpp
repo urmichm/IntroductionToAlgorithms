@@ -1,7 +1,7 @@
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 
-#include "LongestSubstrAtLeastKReapChar.h"
+#include "DifferentWaysToAddParentheses.h"
 
 #include <iostream>
 using namespace std;
@@ -9,6 +9,29 @@ using namespace std;
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+#ifdef DIFFERENT_WAYS_TO_ADD_PARENTHESES
+	{
+		vector<int> res = diffWaysToCompute("2*3-4*5");
+		for (int n : res)
+			cout << n << " ";
+		cout << endl;
+	}
+	{
+		vector<int> res = diffWaysToCompute("25");
+		for (int n : res)
+			cout << n << " ";
+		cout << endl;
+	}
+	{
+		vector<int> res = diffWaysToCompute("23-4*5");
+		for (int n : res)
+			cout << n << " ";
+		cout << endl;
+	}
+#endif // DIFFERENT_WAYS_TO_ADD_PARENTHESES
+
+
 
 #ifdef LONGEST_SUBSTRING_WITH_AT_LEASET_K_REPEAT_CHAR
 
@@ -49,8 +72,6 @@ int main()
 	}
 
 #endif // LONGEST_SUBSTRING_WITH_AT_LEASET_K_REPEAT_CHAR
-
-
 
 #ifdef SEARCH_2D_MATRIX_I
 
