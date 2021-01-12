@@ -30,3 +30,16 @@
 *.exe
 *.out
 *.app
+Code/Debug/*
+Code/.vs/*
+*.log
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+*.vcxproj
+*.vcxproj.filters
