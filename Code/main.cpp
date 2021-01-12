@@ -1,7 +1,7 @@
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 
-#include "Search2DMatrixI.h"
+#include "LongestSubstrAtLeastKReapChar.h"
 
 #include <iostream>
 using namespace std;
@@ -10,10 +10,50 @@ int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
+#ifdef LONGEST_SUBSTRING_WITH_AT_LEASET_K_REPEAT_CHAR
+
+	{
+		string s = "aaabb";
+		int k = 3;
+		int expected = 3;
+		cout << "Longest substr with at least K repeated chars " << expected << ", returned "
+			<< longestSubstring(s, k) << endl;
+	}
+	{
+		string s = "ababbc";
+		int k = 2;
+		int expected = 5;
+		cout << "Longest substr with at least K repeated chars " << expected << ", returned "
+			<< longestSubstring(s, k) << endl;
+	}
+	{
+		string s = "a";
+		int k = 1;
+		int expected = 1;
+		cout << "Longest substr with at least K repeated chars " << expected << ", returned "
+			<< longestSubstring(s, k) << endl;
+	}
+	{
+		string s = "c";
+		int k = 2;
+		int expected = 0;
+		cout << "Longest substr with at least K repeated chars " << expected << ", returned "
+			<< longestSubstring(s, k) << endl;
+	}
+	{
+		string s = "abxabbc";
+		int k = 2;
+		int expected = 2;
+		cout << "Longest substr with at least K repeated chars " << expected << ", returned "
+			<< longestSubstring(s, k) << endl;
+	}
+
+#endif // LONGEST_SUBSTRING_WITH_AT_LEASET_K_REPEAT_CHAR
+
+
 
 #ifdef SEARCH_2D_MATRIX_I
 
-#endif // SEARCH_2D_MATRIX_I
 	{
 		vector<vector<int>> matrix = {
 			{ 1 },
@@ -57,6 +97,7 @@ int main()
 		cout << "Search 2D Matrix I " << expected << ", returned "
 			<< searchMatrix(matrix, target) << endl;
 	}
+#endif // SEARCH_2D_MATRIX_I
 
 #ifdef SEARCH_2D_MATRIX_II
 	{
