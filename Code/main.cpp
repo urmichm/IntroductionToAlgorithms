@@ -1,14 +1,59 @@
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
-
-#include "DifferentWaysToAddParentheses.h"
-
+#include "IsGraphBipartite.h"
 #include <iostream>
 using namespace std;
 
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+#ifdef IS_GRAPH_BIPARTITE
+	{
+		vector<vector<int>> g{ {{1,3},{0,2},{1,3},{0,2}} };
+		bool expected = true;
+		cout << "Is Graph bipatite? " << expected << " | " << isBipartite(g) << endl;
+	}
+	{
+		vector<vector<int>> g{ {{1,3,2},{0,2},{0,1,3},{0,2}} };
+		bool expected = false;
+		cout << "Is Graph bipatite? " << expected << " | " << isBipartite(g) << endl;
+	}
+	{
+		vector<vector<int>> g{ 
+			{},				// 0
+			{2,4,6},		// 1
+			{1,4,8,9},		// 2
+			{7,8},			// 3
+			{1,2,8,9},		// 4
+			{6,9},			// 5
+			{1,5,7,8,9},	// 6
+			{3,6,9},		// 7
+			{2,3,4,6,9},	// 8
+			{2,4,5,6,7,8}	// 9
+		};
+		bool expected = false;
+		cout << "Is Graph bipatite? " << expected << " | " << isBipartite(g) << endl;
+	}
+	{
+		vector<vector<int>> g{
+			{3, 4, 6},		// 0
+			{3, 6},			// 1
+			{3, 6},			// 2
+			{0, 1, 2, 5},	// 3
+			{0, 7, 8},		// 4 
+			{3},			// 5 
+			{0, 1, 2, 7},	// 6
+			{4, 6},			// 7
+			{4},			// 8 
+			{}				// 9
+		};
+		bool expected = true;
+		cout << "Is Graph bipatite? " << expected << " | " << isBipartite(g) << endl;
+	}
+#endif // IS_GRAPH_BIPARTITE
+
+
 
 #ifdef DIFFERENT_WAYS_TO_ADD_PARENTHESES
 	{
@@ -30,8 +75,6 @@ int main()
 		cout << endl;
 	}
 #endif // DIFFERENT_WAYS_TO_ADD_PARENTHESES
-
-
 
 #ifdef LONGEST_SUBSTRING_WITH_AT_LEASET_K_REPEAT_CHAR
 
