@@ -52,10 +52,11 @@ bool DFS(vector<vector<char>>& grid, vector<vector<bool>>& seen, int prev_r, int
 	bool result = false;
 	if (prev_c == -1)
 	{
-		result = DFS(grid, seen, row, col, row + 1, col);
-		result = result ? result : DFS(grid, seen, row, col, row - 1, col);
-		result = result ? result : DFS(grid, seen, row, col, row, col + 1);
-		result = result ? result : DFS(grid, seen, row, col, row, col - 1);
+		seen[row][col] = true;
+		result =           DFS(grid, seen, row, col, row + 1, col);
+		result = result || DFS(grid, seen, row, col, row - 1, col);
+		result = result || DFS(grid, seen, row, col, row, col + 1);
+		result = result || DFS(grid, seen, row, col, row, col - 1);
 		return result;
 	}
 	
