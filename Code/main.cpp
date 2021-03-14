@@ -1,12 +1,41 @@
 #define _CRTDBG_MAP_ALLOC
+#include "DetectCyclesIn2DGrid.h"
 #include <crtdbg.h>
-#include "IsGraphBipartite.h"
-#include <iostream>
 using namespace std;
 
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+#ifdef DETECT_DYCLES_IN_2D_GRID
+	run();
+#endif // DETECT_DYCLES_IN_2D_GRID
+
+
+#ifdef SCC_IN_DIRECTED_GRAPH
+	SCCs_DirectedGraph();
+#endif // SCC_IN_DIRECTED_GRAPH
+
+#ifdef DIVIDE_TWO_INTEGERS
+	{
+		int dividend = 10, divisor = 3;
+		int expected = 3;
+		//  Explanation : 10 / 3 = truncate(3.33333..) = 3.
+	}
+	{
+		int dividend = 7, divisor = -3;
+		int expected = -2;
+		//  Explanation : 7 / -3 = truncate(-2.33333..) = -2.
+	}
+	{
+		int dividend = 0, divisor = 1;
+		int expected = 0;
+	}
+	{
+		int dividend = 1, divisor = 1;
+		int expected = 1;
+	}
+#endif  // DIVIDE_TWO_INTEGERS
 
 #ifdef IS_GRAPH_BIPARTITE
 	{
@@ -52,8 +81,6 @@ int main()
 		cout << "Is Graph bipatite? " << expected << " | " << isBipartite(g) << endl;
 	}
 #endif // IS_GRAPH_BIPARTITE
-
-
 
 #ifdef DIFFERENT_WAYS_TO_ADD_PARENTHESES
 	{
@@ -299,6 +326,5 @@ int main()
 #endif // CLOSEST_PAIR
 
 
-	cout << endl << endl;
 	return 0;
 }
