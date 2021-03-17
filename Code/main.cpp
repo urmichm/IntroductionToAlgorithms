@@ -1,11 +1,16 @@
 #define _CRTDBG_MAP_ALLOC
-#include "DetectCyclesIn2DGrid.h"
+#include "3sum.h"
 #include <crtdbg.h>
 using namespace std;
 
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+#ifdef THREE_SUM_PROBLEM
+	run();
+#endif // DETECT_DYCLES_IN_2D_GRID
+
 
 #ifdef DETECT_DYCLES_IN_2D_GRID
 	run();
