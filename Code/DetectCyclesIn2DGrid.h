@@ -35,9 +35,9 @@ bool containsCycle(vector<vector<char>>& grid)
 	vector<vector<bool>> seen(grid.size(), row);
 
 
-	for (int r = 0; r < grid.size() && !result; r++)
+	for (unsigned int r = 0; r < grid.size() && !result; r++)
 	{
-		for(int c = 0; c < grid[0].size() && !result; c++)
+		for(unsigned int c = 0; c < grid[0].size() && !result; c++)
 			if(seen[r][c] == false)
 				result = DFS(grid, seen, -1, -1, r, c);
 	}
@@ -60,8 +60,8 @@ bool DFS(vector<vector<char>>& grid, vector<vector<bool>>& seen, int prev_r, int
 		return result;
 	}
 	
-	if (row >= grid.size()    || row < 0) return false;
-	if (col >= grid[0].size() || col < 0) return false;
+	if (row >= (int)grid.size()    || row < 0) return false;
+	if (col >= (int)grid[0].size() || col < 0) return false;
 
 	if (grid[row][col] != grid[prev_r][prev_c]) return false;
 
@@ -82,18 +82,34 @@ bool DFS(vector<vector<char>>& grid, vector<vector<bool>>& seen, int prev_r, int
 
 void run(void)
 {
-	vector<vector<char>> grid(
-		{
-		{'a', 'b', 'b', 'b', 'b'},
-		{'a', 'b', 'c', 'a', 'c'},
-		{'a', 'b', 'b', 'a', 'b'},
-		{'a', 'b', 'b', 'b', 'b'}
-		}
-	);
+	{
+		vector<vector<char>> grid(
+			{
+			{'d', 'b', 'b'},
+			{'c', 'a', 'a'},
+			{'b', 'a', 'c'},
+			{'c', 'c', 'c'},
+			{'d', 'd', 'a'}
+			}
+		);
 
-	bool expected = true;
-	bool actual = containsCycle(grid);
-	cout << (expected == actual ? "OK" : "WRONG") << endl;
+		bool expected = false;
+		bool actual = containsCycle(grid);
+		cout << (expected == actual ? "OK" : "WRONG") << endl;
+	}
+	{
+		vector<vector<char>> grid(
+			{
+			{'a', 'b', 'b', 'b', 'b'},
+			{'a', 'b', 'c', 'a', 'c'},
+			{'a', 'b', 'b', 'a', 'b'},
+			{'a', 'b', 'b', 'b', 'b'}
+			}
+		);
 
+		bool expected = true;
+		bool actual = containsCycle(grid);
+		cout << (expected == actual ? "OK" : "WRONG") << endl;
+	}
 	return;
 }
