@@ -65,33 +65,24 @@ Node* cloneGraph(Node* node)
 	Node* root = new Node(node->val);
 
 	queue<Node*> queue;
-	map<char, Node*> new_list;
-	set<char> seen;
+	map<int, Node*> new_list;
+	set<int> seen;
 
-	new_list[root->val]=root;
+	new_list[root->val] = root;
 	seen.insert(node->val);
-
-	for (Node* n : node->neighbors)
-	{
-		Node* u = new Node(n->val);
-		root->neighbors.push_back(u);
-		u->neighbors.push_back(root);
-		new_list[u->val] = u;
-		queue.push(n);
-	}
+	queue.push(node);
 
 	while (!queue.empty())
 	{
 		Node* old_v = queue.front();
 		queue.pop();
 		Node* new_v = new_list[old_v->val];
-
 		for (Node* old_u : old_v->neighbors)
 		{
-			if (seen.count(old_u->val) != 0) 
+			if (seen.count(old_u->val) != 0)
 				continue;
-			
-			if (new_list[old_u->val] == 0) 
+
+			if (new_list[old_u->val] == 0)
 			{
 				Node* new_u = new Node(old_u->val);
 				new_v->neighbors.push_back(new_u);
@@ -99,14 +90,14 @@ Node* cloneGraph(Node* node)
 				new_list[new_u->val] = new_u;
 				queue.push(old_u);
 			}
-			else 
+			else
 			{
 				Node* new_u = new_list[old_u->val];
 				new_v->neighbors.push_back(new_u);
 				new_u->neighbors.push_back(new_v);
 			}
 		}
-	
+
 		seen.insert(old_v->val);
 	}
 
