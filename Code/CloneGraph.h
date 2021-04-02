@@ -27,7 +27,7 @@ using namespace std;
 
 class Node {
 public:
-	char val;
+	int val;
 	bool visited;
 	vector<Node*> neighbors;
 	Node() {
