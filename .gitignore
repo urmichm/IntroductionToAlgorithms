@@ -43,3 +43,4 @@ Code/.vs/*
 
 *.vcxproj
 *.vcxproj.filters
+Code/main.cpp
