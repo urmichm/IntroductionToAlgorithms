@@ -19,8 +19,6 @@ public:
 	char val;
 	/* leader of the component, this node belongs to */
 	char component_leader;
-	/* tag used to store any temporary data */	
-	int tag;
 	/* boolean filed to distinguish if the node has been discovered */
 	bool visited;
 	/* adjacent neightbors */
@@ -29,7 +27,6 @@ public:
 	/* Constuctor */
 	Node(char _id) : val(_id){
 		this->component_leader = (-1);
-		this->tag = (-1);
 		this->visited = (false);
 	}
 };
@@ -39,7 +36,7 @@ public:
 static void SCCs_DirectedGraph(const unsigned char N, vector<vector<char>> edges);
 
 static void SCCs_DFSLoop(vector<Node> &adjList, deque<char> &q, const bool forward);
-static void SCCs_DFSWork(Node* &node, char &S, int &time, deque<char> &q, const bool forward);
+static void SCCs_DFSWork(Node* &node, char &S, deque<char> &q, const bool forward);
 
 static void SCCs_DirectedGraph(const unsigned char N, vector<vector<char>> edges);
 
@@ -49,7 +46,6 @@ void run(void);
 
 static void SCCs_DFSLoop(vector<Node>& adjList, deque<char>& q, const bool forward)
 {
-	int time = 0;
 	char S = 0;    // source (used for component leaders)
 	// safety check
 	if (q.size() != adjList.size()) 
@@ -69,7 +65,7 @@ static void SCCs_DFSLoop(vector<Node>& adjList, deque<char>& q, const bool forwa
 			Node* node = &adjList[i];
 			S = i + 'A';
 
-			SCCs_DFSWork(node, S, time, q, forward);
+			SCCs_DFSWork(node, S, q, forward);
 		}
 	}
 
@@ -80,7 +76,7 @@ static void SCCs_DFSLoop(vector<Node>& adjList, deque<char>& q, const bool forwa
 	}
 }
 
-static void SCCs_DFSWork(Node* &node, char &S, int &time, deque<char> &q, const bool forward)
+static void SCCs_DFSWork(Node* &node, char &S, deque<char> &q, const bool forward)
 {
 	node->visited = true;
 	node->component_leader = S;
@@ -88,11 +84,9 @@ static void SCCs_DFSWork(Node* &node, char &S, int &time, deque<char> &q, const 
 	{
 		if (next->visited == false)
 		{
-			SCCs_DFSWork(next, S, time, q, forward);
+			SCCs_DFSWork(next, S, q, forward);
 		}
 	}
-	time++;
-	node->tag = time;
 	forward ? q.push_back(node->val) : q.push_front(node->val);
 }
 
@@ -123,11 +117,17 @@ static void SCCs_DirectedGraph(const unsigned char N, vector<vector<char>> edges
 	}
 
 	// Run DFS-loop on the reverse graph to obtain the finishing time of each node
+	// Deque is used to store nodes in their finishing time order (finishing array)
+	// Initially, we fill the queue with all the nodes in an orbitrary way.
 	SCCs_DFSLoop(adjListRev, q, true);
+	// after the first call the queue is filled according to nodes finishing time
+	// so we shall go in reverse way.
 	SCCs_DFSLoop(adjList, q, false);
+	// now adjList graph contains information about its components
+	// each node has a component-leader of the component it belongs to :)
 
 	// to print the graph
-	print_graph(adjList);
+	// print_graph(adjList);
 
 	return;
 }
@@ -151,11 +151,7 @@ static void print_graph(vector<Node>& adjList)
 {
 	for (unsigned int i = 0; i < adjList.size(); i++)
 	{
-		cout << adjList[i].val << ": ";
-		for (Node* v : adjList[i].neighbors) {
-			cout << v->val << " ";
-		}
-		cout << "." << endl;
+		cout << adjList[i].val << " belongs to " << adjList[i].component_leader << "." << endl;
 	}
 }
 
