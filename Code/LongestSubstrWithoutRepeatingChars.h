@@ -1,5 +1,9 @@
 #pragma once
-
+/**
+Longest Substring Without Repeating Characters
+LeetCode 3. https://leetcode.com/problems/longest-substring-without-repeating-characters/
+Given a string s, find the length of the longest substring without repeating characters.
+*/
 #include <iostream>
 #include <algorithm>
 #include <string>
@@ -12,27 +16,28 @@ int lengthOfLongestSubstring(string s);
 int lengthOfLongestSubstring(string s) 
 {
 	if (s.length() <= 1) return s.length();
-	
+
 	unsigned int result = 1;
 	unsigned int i = 0, j = 1;
-	unsigned int map = 0, mask = 0;
-	mask = (1 << (s[0] - 'a'));
+	__uint128_t  map = 0, mask = 0;
+	__uint128_t  ONE = 1;
+	mask = (ONE << (s[0]));
 	map = map | mask;
 
-	while( j < s.length() )
+	while (j < s.length())
 	{
-		mask = (1 << (s[j] - 'a'));
-		if ((map & mask) == 0) 
+		mask = (ONE << (s[j]));
+		if ((map & mask) == 0)
 		{
 			// add j-th symbol into the substr
 			map = map | mask;
 			j++;
-			result = max(result, (j-i));
+			result = max(result, (j - i));
 		}
 		else
 		{
 			// remove i-th symbol from the substr
-			mask = (1 << (s[i] - 'a'));
+			mask = (ONE << (s[i]));
 			map = map & (~mask);
 			i++;
 		}
