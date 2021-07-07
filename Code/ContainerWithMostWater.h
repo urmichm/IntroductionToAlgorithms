@@ -26,7 +26,7 @@ int maxArea(vector<int>& height)
 	{
 		int tmp = (r - l) * min(height[l], height[r]);
 		result = max(result, tmp);
-		if (height[l + 1] < height[r - 1])
+		if (height[l] < height[r])
 			l++;
 		else
 			r--;
